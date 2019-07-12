@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbFGLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="PIA_EXEC_TYPE">
+    <Key>
+      <PropertyRef Name="STATUS_ID" />
+    </Key>
+    <Property Name="STATUS_ID" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IN_NAME" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="OUT_NAME" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="CRT_UID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CRT_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CRT_DATE" Type="DateTime" Precision="0" />
+    <Property Name="CRT_TIME" Type="Time" Precision="7" />
+    <Property Name="UPD_UID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UPD_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="UPD_DATE" Type="DateTime" Precision="0" />
+    <Property Name="UPD_TIME" Type="Time" Precision="7" />
+    <NavigationProperty Name="PIA_LOG_MAIN" Relationship="Self.R_LOG_MAIN_EXEC_TYPE" FromRole="PIA_EXEC_TYPE" ToRole="PIA_LOG_MAIN" />
+  </EntityType>
+  <EntityType Name="PIA_LOG_MAIN">
+    <Key>
+      <PropertyRef Name="TRACKING_SEQ" />
+    </Key>
+    <Property Name="TRACKING_SEQ" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ACCESS_ACCOUNT" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ACCOUNT_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="FROM_IP" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ACCESS_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ACCESS_TIME" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="PROGFUN_NAME" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ACCESSOBJ_NAME" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EXECUTION_CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="AFFECT_ROWS" Type="Int32" />
+    <Property Name="PIA_OWNER1" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="PIA_OWNER2" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="PIA_TYPE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="PIA_EXEC_TYPE" Relationship="Self.R_LOG_MAIN_EXEC_TYPE" FromRole="PIA_LOG_MAIN" ToRole="PIA_EXEC_TYPE" />
+    <NavigationProperty Name="PIA_TRACK_TYPE" Relationship="Self.R_LOG_MAIN_TRACK_TYPE" FromRole="PIA_LOG_MAIN" ToRole="PIA_TRACK_TYPE" />
+  </EntityType>
+  <EntityType Name="PIA_TRACK_TYPE">
+    <Key>
+      <PropertyRef Name="STATUS_ID" />
+    </Key>
+    <Property Name="STATUS_ID" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IN_NAME" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="OUT_NAME" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="CRT_UID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CRT_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CRT_DATE" Type="DateTime" Precision="0" />
+    <Property Name="CRT_TIME" Type="Time" Precision="7" />
+    <Property Name="UPD_UID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="UPD_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="UPD_DATE" Type="DateTime" Precision="0" />
+    <Property Name="UPD_TIME" Type="Time" Precision="7" />
+    <NavigationProperty Name="PIA_LOG_MAIN" Relationship="Self.R_LOG_MAIN_TRACK_TYPE" FromRole="PIA_TRACK_TYPE" ToRole="PIA_LOG_MAIN" />
+  </EntityType>
+  <EntityType Name="PIA_TRN_HIST">
+    <Key>
+      <PropertyRef Name="HIST_ID" />
+    </Key>
+    <Property Name="HIST_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TRACKSEQ_START" Type="Int64" Nullable="false" />
+    <Property Name="TRACKSEQ_END" Type="Int64" Nullable="false" />
+    <Property Name="EXEC_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EXEC_TIME" Type="Time" Nullable="false" Precision="7" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="CDATE" />
+      <PropertyRef Name="CTIME" />
+      <PropertyRef Name="CFUNCTION" />
+      <PropertyRef Name="CUSERID" />
+      <PropertyRef Name="CACTION" />
+      <PropertyRef Name="CCONTENT" />
+    </Key>
+    <Property Name="CDATE" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="CTIME" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="CFUNCTION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CUSERID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="CACTION" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="CCONTENT" Type="String" MaxLength="250" FixedLength="true" Unicode="false" Nullable="false" />
+  </EntityType>
+  <Association Name="R_LOG_MAIN_EXEC_TYPE">
+    <End Role="PIA_EXEC_TYPE" Type="Self.PIA_EXEC_TYPE" Multiplicity="1" />
+    <End Role="PIA_LOG_MAIN" Type="Self.PIA_LOG_MAIN" Multiplicity="*" />
+  </Association>
+  <Association Name="R_LOG_MAIN_TRACK_TYPE">
+    <End Role="PIA_TRACK_TYPE" Type="Self.PIA_TRACK_TYPE" Multiplicity="1" />
+    <End Role="PIA_LOG_MAIN" Type="Self.PIA_LOG_MAIN" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="dbFGLEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="PIA_EXEC_TYPE" EntityType="Self.PIA_EXEC_TYPE" />
+    <EntitySet Name="PIA_LOG_MAIN" EntityType="Self.PIA_LOG_MAIN" />
+    <EntitySet Name="PIA_TRACK_TYPE" EntityType="Self.PIA_TRACK_TYPE" />
+    <EntitySet Name="PIA_TRN_HIST" EntityType="Self.PIA_TRN_HIST" />
+    <EntitySet Name="Log" EntityType="Self.Log" />
+    <AssociationSet Name="R_LOG_MAIN_EXEC_TYPE" Association="Self.R_LOG_MAIN_EXEC_TYPE">
+      <End Role="PIA_EXEC_TYPE" EntitySet="PIA_EXEC_TYPE" />
+      <End Role="PIA_LOG_MAIN" EntitySet="PIA_LOG_MAIN" />
+    </AssociationSet>
+    <AssociationSet Name="R_LOG_MAIN_TRACK_TYPE" Association="Self.R_LOG_MAIN_TRACK_TYPE">
+      <End Role="PIA_TRACK_TYPE" EntitySet="PIA_TRACK_TYPE" />
+      <End Role="PIA_LOG_MAIN" EntitySet="PIA_LOG_MAIN" />
+    </AssociationSet>
+    <EntitySet Name="CODE_USER_HIS" EntityType="dbFGLModel.CODE_USER_HIS" />
+    <EntitySet Name="CODE_USER_ROLE" EntityType="dbFGLModel.CODE_USER_ROLE" />
+    <EntitySet Name="CODE_USER_ROLE_HIS" EntityType="dbFGLModel.CODE_USER_ROLE_HIS" />
+    <EntitySet Name="SYS_SEQ" EntityType="dbFGLModel.SYS_SEQ" />
+    <EntitySet Name="CODE_ROLE_FUNC" EntityType="dbFGLModel.CODE_ROLE_FUNC" />
+    <EntitySet Name="CODE_ROLE_FUNC_HIS" EntityType="dbFGLModel.CODE_ROLE_FUNC_HIS" />
+    <EntitySet Name="CODE_SYS_INFO" EntityType="dbFGLModel.CODE_SYS_INFO" />
+    <EntitySet Name="CODE_FUNC" EntityType="dbFGLModel.CODE_FUNC" />
+    <EntitySet Name="CODE_ROLE_HIS" EntityType="dbFGLModel.CODE_ROLE_HIS" />
+    <EntitySet Name="CODE_ROLE" EntityType="dbFGLModel.CODE_ROLE" />
+    <EntitySet Name="SYS_PARA" EntityType="dbFGLModel.SYS_PARA" />
+    <EntitySet Name="CODE_USER" EntityType="dbFGLModel.CODE_USER" />
+    <EntitySet Name="SSO_APLY_REC" EntityType="dbFGLModel.SSO_APLY_REC" />
+    <EntitySet Name="SYS_CODE" EntityType="dbFGLModel.SYS_CODE" />
+  </EntityContainer>
+  <EntityType Name="CODE_USER_HIS">
+    <Key>
+      <PropertyRef Name="APLY_NO" />
+      <PropertyRef Name="USER_ID" />
+    </Key>
+    <Property Name="APLY_NO" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="USER_ID" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="EXEC_ACTION" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IS_DISABLED" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IS_DISABLED_B" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IS_MAIL" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IS_MAIL_B" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CODE_USER_ROLE">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="USER_ID" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ROLE_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CREATE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="CREATE_DT" Type="DateTime" Precision="3" />
+    <Property Name="LAST_UPDATE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="LAST_UPDATE_DT" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CODE_USER_ROLE_HIS">
+    <Key>
+      <PropertyRef Name="APLY_NO" />
+      <PropertyRef Name="USER_ID" />
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="APLY_NO" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="USER_ID" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ROLE_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="EXEC_ACTION" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SYS_SEQ">
+    <Key>
+      <PropertyRef Name="SYS_CD" />
+      <PropertyRef Name="SEQ_TYPE" />
+      <PropertyRef Name="PRECODE" />
+    </Key>
+    <Property Name="SYS_CD" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="SEQ_TYPE" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="PRECODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CURR_VALUE" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CODE_ROLE_FUNC">
+    <Key>
+      <PropertyRef Name="ROLE_ID" />
+      <PropertyRef Name="FUNC_ID" />
+    </Key>
+    <Property Name="ROLE_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FUNC_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="LAST_UPDATE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="LAST_UPDATE_DT" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CODE_ROLE_FUNC_HIS">
+    <Key>
+      <PropertyRef Name="APLY_NO" />
+      <PropertyRef Name="ROLE_ID" />
+      <PropertyRef Name="FUNC_ID" />
+    </Key>
+    <Property Name="APLY_NO" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="ROLE_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FUNC_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="EXEC_ACTION" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CODE_SYS_INFO">
+    <Key>
+      <PropertyRef Name="SYS_CD" />
+    </Key>
+    <Property Name="SYS_CD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SYS_NAME" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="SYS_URL" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CODE_FUNC">
+    <Key>
+      <PropertyRef Name="FUNC_ID" />
+    </Key>
+    <Property Name="SYS_CD" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FUNC_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PARENT_FUNC_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FUNC_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FUNC_LEVEL" Type="Int32" Nullable="false" />
+    <Property Name="FUNC_MEMO" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="FUNC_URL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FUNC_ORDER" Type="Int32" Nullable="false" />
+    <Property Name="IS_DISABLED" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CREATE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="CREATE_DT" Type="DateTime" Precision="3" />
+    <Property Name="LAST_UPDATE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="LAST_UPDATE_DT" Type="DateTime" Precision="3" />
+    <Property Name="AUTH_UNIT" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CODE_ROLE_HIS">
+    <Key>
+      <PropertyRef Name="APLY_NO" />
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="APLY_NO" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="ROLE_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="AUTH_UNIT" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="ROLE_NAME" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="FREE_AUTH" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="EXEC_ACTION" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IS_DISABLED" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="MEMO" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ROLE_NAME_B" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="FREE_AUTH_B" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IS_DISABLED_B" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="MEMO_B" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="CODE_ROLE">
+    <Key>
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="ROLE_ID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="ROLE_NAME" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="IS_DISABLED" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="MEMO" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="DATA_STATUS" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CREATE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="CREATE_DT" Type="DateTime" Precision="3" />
+    <Property Name="LAST_UPDATE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="LAST_UPDATE_DT" Type="DateTime" Precision="3" />
+    <Property Name="APPR_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="APPR_DT" Type="DateTime" Precision="3" />
+    <Property Name="FREEZE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="FREEZE_DT" Type="DateTime" Precision="3" />
+    <Property Name="AUTH_UNIT" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="FREE_AUTH" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SYS_PARA">
+    <Key>
+      <PropertyRef Name="SYS_CD" />
+      <PropertyRef Name="PARA_ID" />
+      <PropertyRef Name="GRP_ID" />
+    </Key>
+    <Property Name="SYS_CD" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="PARA_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PARA_VALUE" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="REMARK" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="RESERVE1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="RESERVE2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="RESERVE3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="GRP_ID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="CODE_USER">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+    </Key>
+    <Property Name="USER_ID" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="USER_UNIT" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="IS_DISABLED" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="IS_MAIL" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="CREATE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="CREATE_DT" Type="DateTime" Precision="3" />
+    <Property Name="LAST_UPDATE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="LAST_UPDATE_DT" Type="DateTime" Precision="3" />
+    <Property Name="APPR_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="APPR_DT" Type="DateTime" Precision="3" />
+    <Property Name="FREEZE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="FREEZE_DT" Type="DateTime" Precision="3" />
+    <Property Name="LAST_LOGIN_DT" Type="DateTime" Precision="3" />
+    <Property Name="LAST_LOGOUT_DT" Type="DateTime" Precision="3" />
+    <Property Name="CREATE_UNIT" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SSO_APLY_REC">
+    <Key>
+      <PropertyRef Name="APLY_NO" />
+    </Key>
+    <Property Name="APLY_NO" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="APLY_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="APPR_STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="APPR_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="APPR_DT" Type="DateTime" Precision="3" />
+    <Property Name="APPR_DESC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="APPR_MAPPING_KEY" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CREATE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="CREATE_DT" Type="DateTime" Precision="3" />
+    <Property Name="LAST_UPDATE_UID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="LAST_UPDATE_DT" Type="DateTime" Precision="3" />
+    <Property Name="CREATE_UNIT" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SYS_CODE">
+    <Key>
+      <PropertyRef Name="SYS_CD" />
+      <PropertyRef Name="CODE_TYPE" />
+      <PropertyRef Name="CODE" />
+    </Key>
+    <Property Name="SYS_CD" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CODE_TYPE" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CODE" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CODE_VALUE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ISORTBY" Type="Int32" Nullable="false" />
+    <Property Name="REMARK" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RESERVE1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="RESERVE2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="RESERVE3" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

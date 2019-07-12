@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbFGLModelStoreContainer" CdmEntityContainer="dbFGLEntities">
+    <EntitySetMapping Name="PIA_EXEC_TYPE">
+      <EntityTypeMapping TypeName="dbFGLModel.PIA_EXEC_TYPE">
+        <MappingFragment StoreEntitySet="PIA_EXEC_TYPE">
+          <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
+          <ScalarProperty Name="IN_NAME" ColumnName="IN_NAME" />
+          <ScalarProperty Name="OUT_NAME" ColumnName="OUT_NAME" />
+          <ScalarProperty Name="CRT_UID" ColumnName="CRT_UID" />
+          <ScalarProperty Name="CRT_NAME" ColumnName="CRT_NAME" />
+          <ScalarProperty Name="CRT_DATE" ColumnName="CRT_DATE" />
+          <ScalarProperty Name="CRT_TIME" ColumnName="CRT_TIME" />
+          <ScalarProperty Name="UPD_UID" ColumnName="UPD_UID" />
+          <ScalarProperty Name="UPD_NAME" ColumnName="UPD_NAME" />
+          <ScalarProperty Name="UPD_DATE" ColumnName="UPD_DATE" />
+          <ScalarProperty Name="UPD_TIME" ColumnName="UPD_TIME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PIA_LOG_MAIN">
+      <EntityTypeMapping TypeName="dbFGLModel.PIA_LOG_MAIN">
+        <MappingFragment StoreEntitySet="PIA_LOG_MAIN">
+          <ScalarProperty Name="TRACKING_SEQ" ColumnName="TRACKING_SEQ" />
+          <ScalarProperty Name="ACCESS_ACCOUNT" ColumnName="ACCESS_ACCOUNT" />
+          <ScalarProperty Name="ACCOUNT_NAME" ColumnName="ACCOUNT_NAME" />
+          <ScalarProperty Name="FROM_IP" ColumnName="FROM_IP" />
+          <ScalarProperty Name="ACCESS_DATE" ColumnName="ACCESS_DATE" />
+          <ScalarProperty Name="ACCESS_TIME" ColumnName="ACCESS_TIME" />
+          <ScalarProperty Name="PROGFUN_NAME" ColumnName="PROGFUN_NAME" />
+          <ScalarProperty Name="ACCESSOBJ_NAME" ColumnName="ACCESSOBJ_NAME" />
+          <ScalarProperty Name="EXECUTION_CONTENT" ColumnName="EXECUTION_CONTENT" />
+          <ScalarProperty Name="AFFECT_ROWS" ColumnName="AFFECT_ROWS" />
+          <ScalarProperty Name="PIA_OWNER1" ColumnName="PIA_OWNER1" />
+          <ScalarProperty Name="PIA_OWNER2" ColumnName="PIA_OWNER2" />
+          <ScalarProperty Name="PIA_TYPE" ColumnName="PIA_TYPE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PIA_TRACK_TYPE">
+      <EntityTypeMapping TypeName="dbFGLModel.PIA_TRACK_TYPE">
+        <MappingFragment StoreEntitySet="PIA_TRACK_TYPE">
+          <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
+          <ScalarProperty Name="IN_NAME" ColumnName="IN_NAME" />
+          <ScalarProperty Name="OUT_NAME" ColumnName="OUT_NAME" />
+          <ScalarProperty Name="CRT_UID" ColumnName="CRT_UID" />
+          <ScalarProperty Name="CRT_NAME" ColumnName="CRT_NAME" />
+          <ScalarProperty Name="CRT_DATE" ColumnName="CRT_DATE" />
+          <ScalarProperty Name="CRT_TIME" ColumnName="CRT_TIME" />
+          <ScalarProperty Name="UPD_UID" ColumnName="UPD_UID" />
+          <ScalarProperty Name="UPD_NAME" ColumnName="UPD_NAME" />
+          <ScalarProperty Name="UPD_DATE" ColumnName="UPD_DATE" />
+          <ScalarProperty Name="UPD_TIME" ColumnName="UPD_TIME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PIA_TRN_HIST">
+      <EntityTypeMapping TypeName="dbFGLModel.PIA_TRN_HIST">
+        <MappingFragment StoreEntitySet="PIA_TRN_HIST">
+          <ScalarProperty Name="HIST_ID" ColumnName="HIST_ID" />
+          <ScalarProperty Name="TRACKSEQ_START" ColumnName="TRACKSEQ_START" />
+          <ScalarProperty Name="TRACKSEQ_END" ColumnName="TRACKSEQ_END" />
+          <ScalarProperty Name="EXEC_DATE" ColumnName="EXEC_DATE" />
+          <ScalarProperty Name="EXEC_TIME" ColumnName="EXEC_TIME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Log">
+      <EntityTypeMapping TypeName="dbFGLModel.Log">
+        <MappingFragment StoreEntitySet="Log">
+          <ScalarProperty Name="CDATE" ColumnName="CDATE" />
+          <ScalarProperty Name="CTIME" ColumnName="CTIME" />
+          <ScalarProperty Name="CFUNCTION" ColumnName="CFUNCTION" />
+          <ScalarProperty Name="CUSERID" ColumnName="CUSERID" />
+          <ScalarProperty Name="CACTION" ColumnName="CACTION" />
+          <ScalarProperty Name="CCONTENT" ColumnName="CCONTENT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="R_LOG_MAIN_EXEC_TYPE" TypeName="dbFGLModel.R_LOG_MAIN_EXEC_TYPE" StoreEntitySet="PIA_LOG_MAIN">
+      <EndProperty Name="PIA_EXEC_TYPE">
+        <ScalarProperty Name="STATUS_ID" ColumnName="EXECUTION_TYPE" />
+      </EndProperty>
+      <EndProperty Name="PIA_LOG_MAIN">
+        <ScalarProperty Name="TRACKING_SEQ" ColumnName="TRACKING_SEQ" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="R_LOG_MAIN_TRACK_TYPE" TypeName="dbFGLModel.R_LOG_MAIN_TRACK_TYPE" StoreEntitySet="PIA_LOG_MAIN">
+      <EndProperty Name="PIA_TRACK_TYPE">
+        <ScalarProperty Name="STATUS_ID" ColumnName="TRACKING_TYPE" />
+      </EndProperty>
+      <EndProperty Name="PIA_LOG_MAIN">
+        <ScalarProperty Name="TRACKING_SEQ" ColumnName="TRACKING_SEQ" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="CODE_USER_HIS">
+      <EntityTypeMapping TypeName="dbFGLModel.CODE_USER_HIS">
+        <MappingFragment StoreEntitySet="CODE_USER_HIS">
+          <ScalarProperty Name="IS_MAIL_B" ColumnName="IS_MAIL_B" />
+          <ScalarProperty Name="IS_MAIL" ColumnName="IS_MAIL" />
+          <ScalarProperty Name="IS_DISABLED_B" ColumnName="IS_DISABLED_B" />
+          <ScalarProperty Name="IS_DISABLED" ColumnName="IS_DISABLED" />
+          <ScalarProperty Name="EXEC_ACTION" ColumnName="EXEC_ACTION" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="APLY_NO" ColumnName="APLY_NO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CODE_USER_ROLE">
+      <EntityTypeMapping TypeName="dbFGLModel.CODE_USER_ROLE">
+        <MappingFragment StoreEntitySet="CODE_USER_ROLE">
+          <ScalarProperty Name="LAST_UPDATE_DT" ColumnName="LAST_UPDATE_DT" />
+          <ScalarProperty Name="LAST_UPDATE_UID" ColumnName="LAST_UPDATE_UID" />
+          <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
+          <ScalarProperty Name="CREATE_UID" ColumnName="CREATE_UID" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CODE_USER_ROLE_HIS">
+      <EntityTypeMapping TypeName="dbFGLModel.CODE_USER_ROLE_HIS">
+        <MappingFragment StoreEntitySet="CODE_USER_ROLE_HIS">
+          <ScalarProperty Name="EXEC_ACTION" ColumnName="EXEC_ACTION" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="APLY_NO" ColumnName="APLY_NO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SYS_SEQ">
+      <EntityTypeMapping TypeName="dbFGLModel.SYS_SEQ">
+        <MappingFragment StoreEntitySet="SYS_SEQ">
+          <ScalarProperty Name="CURR_VALUE" ColumnName="CURR_VALUE" />
+          <ScalarProperty Name="PRECODE" ColumnName="PRECODE" />
+          <ScalarProperty Name="SEQ_TYPE" ColumnName="SEQ_TYPE" />
+          <ScalarProperty Name="SYS_CD" ColumnName="SYS_CD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CODE_ROLE_FUNC">
+      <EntityTypeMapping TypeName="dbFGLModel.CODE_ROLE_FUNC">
+        <MappingFragment StoreEntitySet="CODE_ROLE_FUNC">
+          <ScalarProperty Name="LAST_UPDATE_DT" ColumnName="LAST_UPDATE_DT" />
+          <ScalarProperty Name="LAST_UPDATE_UID" ColumnName="LAST_UPDATE_UID" />
+          <ScalarProperty Name="FUNC_ID" ColumnName="FUNC_ID" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CODE_ROLE_FUNC_HIS">
+      <EntityTypeMapping TypeName="dbFGLModel.CODE_ROLE_FUNC_HIS">
+        <MappingFragment StoreEntitySet="CODE_ROLE_FUNC_HIS">
+          <ScalarProperty Name="EXEC_ACTION" ColumnName="EXEC_ACTION" />
+          <ScalarProperty Name="FUNC_ID" ColumnName="FUNC_ID" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="APLY_NO" ColumnName="APLY_NO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CODE_SYS_INFO">
+      <EntityTypeMapping TypeName="dbFGLModel.CODE_SYS_INFO">
+        <MappingFragment StoreEntitySet="CODE_SYS_INFO">
+          <ScalarProperty Name="SYS_URL" ColumnName="SYS_URL" />
+          <ScalarProperty Name="SYS_NAME" ColumnName="SYS_NAME" />
+          <ScalarProperty Name="SYS_CD" ColumnName="SYS_CD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CODE_FUNC">
+      <EntityTypeMapping TypeName="dbFGLModel.CODE_FUNC">
+        <MappingFragment StoreEntitySet="CODE_FUNC">
+          <ScalarProperty Name="AUTH_UNIT" ColumnName="AUTH_UNIT" />
+          <ScalarProperty Name="LAST_UPDATE_DT" ColumnName="LAST_UPDATE_DT" />
+          <ScalarProperty Name="LAST_UPDATE_UID" ColumnName="LAST_UPDATE_UID" />
+          <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
+          <ScalarProperty Name="CREATE_UID" ColumnName="CREATE_UID" />
+          <ScalarProperty Name="IS_DISABLED" ColumnName="IS_DISABLED" />
+          <ScalarProperty Name="FUNC_ORDER" ColumnName="FUNC_ORDER" />
+          <ScalarProperty Name="FUNC_URL" ColumnName="FUNC_URL" />
+          <ScalarProperty Name="FUNC_MEMO" ColumnName="FUNC_MEMO" />
+          <ScalarProperty Name="FUNC_LEVEL" ColumnName="FUNC_LEVEL" />
+          <ScalarProperty Name="FUNC_NAME" ColumnName="FUNC_NAME" />
+          <ScalarProperty Name="PARENT_FUNC_ID" ColumnName="PARENT_FUNC_ID" />
+          <ScalarProperty Name="FUNC_ID" ColumnName="FUNC_ID" />
+          <ScalarProperty Name="SYS_CD" ColumnName="SYS_CD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CODE_ROLE_HIS">
+      <EntityTypeMapping TypeName="dbFGLModel.CODE_ROLE_HIS">
+        <MappingFragment StoreEntitySet="CODE_ROLE_HIS">
+          <ScalarProperty Name="MEMO_B" ColumnName="MEMO_B" />
+          <ScalarProperty Name="IS_DISABLED_B" ColumnName="IS_DISABLED_B" />
+          <ScalarProperty Name="FREE_AUTH_B" ColumnName="FREE_AUTH_B" />
+          <ScalarProperty Name="ROLE_NAME_B" ColumnName="ROLE_NAME_B" />
+          <ScalarProperty Name="MEMO" ColumnName="MEMO" />
+          <ScalarProperty Name="IS_DISABLED" ColumnName="IS_DISABLED" />
+          <ScalarProperty Name="EXEC_ACTION" ColumnName="EXEC_ACTION" />
+          <ScalarProperty Name="FREE_AUTH" ColumnName="FREE_AUTH" />
+          <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
+          <ScalarProperty Name="AUTH_UNIT" ColumnName="AUTH_UNIT" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+          <ScalarProperty Name="APLY_NO" ColumnName="APLY_NO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CODE_ROLE">
+      <EntityTypeMapping TypeName="dbFGLModel.CODE_ROLE">
+        <MappingFragment StoreEntitySet="CODE_ROLE">
+          <ScalarProperty Name="FREE_AUTH" ColumnName="FREE_AUTH" />
+          <ScalarProperty Name="AUTH_UNIT" ColumnName="AUTH_UNIT" />
+          <ScalarProperty Name="FREEZE_DT" ColumnName="FREEZE_DT" />
+          <ScalarProperty Name="FREEZE_UID" ColumnName="FREEZE_UID" />
+          <ScalarProperty Name="APPR_DT" ColumnName="APPR_DT" />
+          <ScalarProperty Name="APPR_UID" ColumnName="APPR_UID" />
+          <ScalarProperty Name="LAST_UPDATE_DT" ColumnName="LAST_UPDATE_DT" />
+          <ScalarProperty Name="LAST_UPDATE_UID" ColumnName="LAST_UPDATE_UID" />
+          <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
+          <ScalarProperty Name="CREATE_UID" ColumnName="CREATE_UID" />
+          <ScalarProperty Name="DATA_STATUS" ColumnName="DATA_STATUS" />
+          <ScalarProperty Name="MEMO" ColumnName="MEMO" />
+          <ScalarProperty Name="IS_DISABLED" ColumnName="IS_DISABLED" />
+          <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
+          <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SYS_PARA">
+      <EntityTypeMapping TypeName="dbFGLModel.SYS_PARA">
+        <MappingFragment StoreEntitySet="SYS_PARA">
+          <ScalarProperty Name="GRP_ID" ColumnName="GRP_ID" />
+          <ScalarProperty Name="RESERVE3" ColumnName="RESERVE3" />
+          <ScalarProperty Name="RESERVE2" ColumnName="RESERVE2" />
+          <ScalarProperty Name="RESERVE1" ColumnName="RESERVE1" />
+          <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+          <ScalarProperty Name="PARA_VALUE" ColumnName="PARA_VALUE" />
+          <ScalarProperty Name="PARA_ID" ColumnName="PARA_ID" />
+          <ScalarProperty Name="SYS_CD" ColumnName="SYS_CD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CODE_USER">
+      <EntityTypeMapping TypeName="dbFGLModel.CODE_USER">
+        <MappingFragment StoreEntitySet="CODE_USER">
+          <ScalarProperty Name="CREATE_UNIT" ColumnName="CREATE_UNIT" />
+          <ScalarProperty Name="LAST_LOGOUT_DT" ColumnName="LAST_LOGOUT_DT" />
+          <ScalarProperty Name="LAST_LOGIN_DT" ColumnName="LAST_LOGIN_DT" />
+          <ScalarProperty Name="FREEZE_DT" ColumnName="FREEZE_DT" />
+          <ScalarProperty Name="FREEZE_UID" ColumnName="FREEZE_UID" />
+          <ScalarProperty Name="APPR_DT" ColumnName="APPR_DT" />
+          <ScalarProperty Name="APPR_UID" ColumnName="APPR_UID" />
+          <ScalarProperty Name="LAST_UPDATE_DT" ColumnName="LAST_UPDATE_DT" />
+          <ScalarProperty Name="LAST_UPDATE_UID" ColumnName="LAST_UPDATE_UID" />
+          <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
+          <ScalarProperty Name="CREATE_UID" ColumnName="CREATE_UID" />
+          <ScalarProperty Name="DATA_STATUS" ColumnName="DATA_STATUS" />
+          <ScalarProperty Name="IS_MAIL" ColumnName="IS_MAIL" />
+          <ScalarProperty Name="IS_DISABLED" ColumnName="IS_DISABLED" />
+          <ScalarProperty Name="USER_UNIT" ColumnName="USER_UNIT" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SSO_APLY_REC">
+      <EntityTypeMapping TypeName="dbFGLModel.SSO_APLY_REC">
+        <MappingFragment StoreEntitySet="SSO_APLY_REC">
+          <ScalarProperty Name="CREATE_UNIT" ColumnName="CREATE_UNIT" />
+          <ScalarProperty Name="LAST_UPDATE_DT" ColumnName="LAST_UPDATE_DT" />
+          <ScalarProperty Name="LAST_UPDATE_UID" ColumnName="LAST_UPDATE_UID" />
+          <ScalarProperty Name="CREATE_DT" ColumnName="CREATE_DT" />
+          <ScalarProperty Name="CREATE_UID" ColumnName="CREATE_UID" />
+          <ScalarProperty Name="APPR_MAPPING_KEY" ColumnName="APPR_MAPPING_KEY" />
+          <ScalarProperty Name="APPR_DESC" ColumnName="APPR_DESC" />
+          <ScalarProperty Name="APPR_DT" ColumnName="APPR_DT" />
+          <ScalarProperty Name="APPR_UID" ColumnName="APPR_UID" />
+          <ScalarProperty Name="APPR_STATUS" ColumnName="APPR_STATUS" />
+          <ScalarProperty Name="APLY_TYPE" ColumnName="APLY_TYPE" />
+          <ScalarProperty Name="APLY_NO" ColumnName="APLY_NO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SYS_CODE">
+      <EntityTypeMapping TypeName="dbFGLModel.SYS_CODE">
+        <MappingFragment StoreEntitySet="SYS_CODE">
+          <ScalarProperty Name="RESERVE3" ColumnName="RESERVE3" />
+          <ScalarProperty Name="RESERVE2" ColumnName="RESERVE2" />
+          <ScalarProperty Name="RESERVE1" ColumnName="RESERVE1" />
+          <ScalarProperty Name="REMARK" ColumnName="REMARK" />
+          <ScalarProperty Name="ISORTBY" ColumnName="ISORTBY" />
+          <ScalarProperty Name="CODE_VALUE" ColumnName="CODE_VALUE" />
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="CODE_TYPE" ColumnName="CODE_TYPE" />
+          <ScalarProperty Name="SYS_CD" ColumnName="SYS_CD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

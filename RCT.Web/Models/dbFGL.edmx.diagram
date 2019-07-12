@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cd113b8c67d24c228e8558c950a256b2" Name="Diagram1">
+        <EntityTypeShape EntityType="dbGLModel.CODE_FUNC" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGLModel.CODE_ROLE" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGLModel.CODE_ROLE_FUNC" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGLModel.CODE_USER_ROLE" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGLModel.SYS_CODE" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbGLModel.RCT_COMPANY_CODE" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="dbGLModel.SYS_SEQ" Width="1.5" PointX="7.375" PointY="4.75" />
+        <EntityTypeShape EntityType="dbGLModel.RCT_COMPANY_RELATION" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="dbGLModel.RCT_COMPANY_RELATION_HIS" Width="1.5" PointX="3.375" PointY="6.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

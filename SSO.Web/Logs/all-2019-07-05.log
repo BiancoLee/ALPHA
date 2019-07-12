@@ -1,0 +1,14 @@
+2019-07-05 09:11:39.9838|SSO.Web.MvcApplication|INFO|Application_Start
+2019-07-05 09:12:12.1234|SSO.Web.Controllers.AccountController|INFO|[AccountController][Login]
+2019-07-05 09:12:12.1364|SSO.Web.Controllers.AccountController|INFO|[AccountController][Login]hasuser:True
+2019-07-05 09:12:12.1364|SSO.Web.Controllers.AccountController|INFO|[AccountController][Login]isAuthenticated:False
+2019-07-05 09:13:48.4735|SSO.WebControllers.NavigationController|INFO|[NavigationController][MenuByUser]
+2019-07-05 09:13:48.4845|SSO.WebControllers.NavigationController|INFO|[NavigationController][MenuByUser]UserID:
+2019-07-05 09:15:02.0431|SSO.Web.Controllers.AccountController|INFO|[AccountController][Login]UserId:B0542
+2019-07-05 09:15:02.0501|SSO.Web.Controllers.AccountController|INFO|[AccountController][Login]IsValid
+2019-07-05 09:15:05.4783|SSO.Web.BO.CommonUtil|INFO|HTTP_X_FORWARDED_FOR:
+2019-07-05 09:15:05.4863|SSO.Web.BO.CommonUtil|INFO|ipAddress:
+2019-07-05 09:15:05.5043|SSO.Web.BO.CommonUtil|INFO|ip:::1
+2019-07-05 09:15:05.6633|SSO.Web.Controllers.AccountController|INFO|[Login]finally¡GB0542
+2019-07-05 09:15:34.9380|SSO.WebControllers.NavigationController|INFO|[NavigationController][MenuByUser]
+2019-07-05 09:15:34.9380|SSO.WebControllers.NavigationController|INFO|[NavigationController][MenuByUser]UserID:B0542

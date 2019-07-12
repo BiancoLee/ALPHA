@@ -1,0 +1,558 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutFrame.cshtml";
+    ViewBag.Title = ViewBag.funcName;
+    var opScope = ViewBag.opScope;
+}
+@using RCT.Web.Enum;
+@using RCT.Web.Utility;
+
+<div class="container-fluid" id="main">
+    <div class="panel panel-primary">
+        <div class="panel-heading">@ViewBag.Title</div>
+         <div class="panel-body">
+             <div id="validationSummary" style="color:red;"></div>
+             @if (opScope != "" && opScope != "0")
+             {
+                 <form id="Comp_Form">
+                     <table>
+                         <tr>
+                             <td align="right">
+                                 <label>收據類別 :&ensp;</label>
+                             </td>
+                             <td>
+                                 @Html.DropDownList("dRecieptType", (SelectList)ViewBag.dRecieptType)
+                             </td>
+                         </tr>
+                         <tr>
+                             <td align="right">
+                                 <label>公司名稱 :&ensp;</label>
+                             </td>
+                             <td>
+                                 @Html.DropDownList("dCompany", (SelectList)ViewBag.dCompany)
+                             </td>
+                         </tr>
+                         <tr>
+                             <td align="right">
+                                 <label>停用/啟用 :&ensp;</label>
+                             </td>
+                             <td>
+                                 @Html.DropDownList("dIsDisabled", (SelectList)ViewBag.dIsDisabled)
+                             </td>
+                         </tr>
+                         <tr>
+                             <td colspan="4" align="center">
+                                 <input type="button" class="btn btn-primary" id="form_bSearch" value="查詢" />
+                                 @*<input type="button" class="btn btn-primary" id="Item_Record_Search" value="開啟異動紀錄查詢" />*@
+                             </td>
+                         </tr>
+                     </table>
+                 </form>
+             }
+         </div>
+        <div class="ShowOrNot">
+            <div style="padding-bottom:5px;">
+                <input type="button" id="comp_Insert" value="新增" class="btn btn-primary" />
+            </div>
+            <div class="col-sm-24">
+                <div id="comp_jqgridDiv" class="jqd" style="padding-bottom:5px;"></div>
+            </div>
+            <div style="text-align:center;" class="IM_Act">
+                    <input type="button" id="comp_Apply" value="申請覆核" class="btn btn-primary" />
+                    <input type="button" id="comp_Cancel" value="取消申請" class="btn btn-primary" />
+                    <input type="button" id="comp_Back" value="回上一頁" class="btn btn-primary" />
+                </div>
+            </div>
+    </div>
+    <div id="mod_Dialog" style="display:none;">
+        <form id="mod_DialogForm">
+            <table>
+                <tr>
+                    <td>
+                        <label>收據類別 :&ensp;</label>
+                    </td>
+                    <td>
+                        @Html.DropDownList("dRecieptType_MOD", (SelectList)ViewBag.dRecieptTypeMod, new { @class = "mod_InsertType" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>公司名稱 :&ensp;</label>
+                    </td>
+                    <td>
+                        @Html.DropDownList("dCompany_MOD", (SelectList)ViewBag.dCompanyMod, new { @class = "mod_InsertType" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>繳款方式 :&ensp;</label>
+                    </td>
+                    <td>
+                        @Html.DropDownList("dPaymentType_MOD", (SelectList)ViewBag.dPaymentTypeMod, new { @class = "mod_InsertType" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>幣別 :&ensp;</label>
+                    </td>
+                    <td>
+                        @Html.DropDownList("dCurrency_MOD", (SelectList)ViewBag.dCurrencyMod, new { @class = "mod_InsertType" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>停用註記 :&ensp;</label>
+                    </td>
+                    <td>
+                        @Html.DropDownList("dIsDisabled_MOD", (SelectList)ViewBag.dIsDisabledMod, new { @class = "mod_InsertType" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" id="btnInsert_Mod" value="新增" class="btn btn-primary" />
+                        <input type="button" id="btnUpdate_Mod" value="修改" class="btn btn-primary" />
+                        <input type="button" id="btnDelete_Mod" value="刪除" class="btn btn-primary" />
+                        <input type="hidden" id="hSelectedRelationId" />
+                        <input type="hidden" id="hSelectedRowId" />  
+                    </td>
+                    <td style="text-align:right;">
+                        <input type="button" id="btnCancelTemp" value="取消" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+</div>
+</div>
+
+<script>
+    //region set url
+    var UrlFor = {};
+    UrlFor.search = '@Url.Action("SearchData", "RctCompRelation")';
+    UrlFor.getData = '@Url.Action("GetCacheData", "RctCompRelation")';
+    UrlFor.InsertData = '@Url.Action("InsertData", "RctCompRelation")';
+    UrlFor.UpdateData = '@Url.Action("UpdateData", "RctCompRelation")';
+    UrlFor.DeleteData = '@Url.Action("DeleteData", "RctCompRelation")';
+    UrlFor.ResetData = '@Url.Action("ResetData", "RctCompRelation")';
+    UrlFor.ApplyData = '@Url.Action("ApplyData", "RctCompRelation")';
+    //#endregion
+
+    //region 參數設定
+    var form_dRecieptType = 'dRecieptType'; //收據類別(查詢下拉選單)
+    var form_dCompany = 'dCompany'; //公司名稱(查詢下拉選單)
+    var form_dIsDisabled = 'dIsDisabled'; //停用/啟用(查詢下拉選單)
+    var mod_FormId = 'mod_DialogForm'; //formId
+    var mod_RecieptType_Id = 'dRecieptType_MOD'; //收據類別(Mod)
+    var mod_Company_Id = 'dCompany_MOD'; //公司名稱(Mod)
+    var mod_PaymentType_Id = 'dPaymentType_MOD' //繳款方式(Mod)
+    var mod_Currency_Id = 'dCurrency_MOD' //幣別(Mod)
+    var mod_IsDisabled_Id = 'dIsDisabled_MOD' //停用註記(Mod)
+    var h_RowId = 'hSelectedRowId' //RowId(GRID)
+    var h_RelationId = 'hSelectedRelationId' //RelationId(流水號)
+
+    var _ConfirmFlag = false; //離開時提醒訊息
+    //#endregion
+
+    var opScope = '@Html.Raw(ViewBag.opScope)';
+    if (opScope == "" || opScope == "0") {
+        $('#validationSummary').children().remove();
+
+        var validationSummary = $('#validationSummary ul.validation-summary-errors');
+
+        if (validationSummary.length == 0) {
+            $('#validationSummary').append('<ul class="validation-summary-errors"></ul>');
+            validationSummary = $('#validationSummary ul.validation-summary-errors');
+        }
+        validationSummary.append('<li>' + '無使用權限' + '</li>');
+    }
+    else {
+        //#region 初始動作
+        set_Verified();
+        $('.ShowOrNot').hide();
+        //#endregion
+        //#region 註冊verified
+        function set_Verified() {
+            //verified.required(IM_FormId, Item_Mod_Id, message.required('存取項目')); //存取項目為必填
+        }
+        //#endregion
+        //#region 註冊事件
+        $('input:button').each(function () {
+            var id = $(this).attr('id');
+            switch (id) {
+                case 'form_bSearch':
+                    $('#' + id).on('click', function () { form_Search(); });
+                    break;
+                case 'comp_Insert':
+                    $('#' + id).off('click');
+                    $('#' + id).on('click', function () { comp_InsertFun(); });
+                    break;
+                case 'btnInsert_Mod':
+                    $('#' + id).off('click');
+                    $('#' + id).on('click', function () { InsertDataFun(); });
+                    break;
+                case 'btnUpdate_Mod':
+                    $('#' + id).off('click');
+                    $('#' + id).on('click', function () { UpdateDataFun(); });
+                    break;
+                case 'btnDelete_Mod':
+                    $('#' + id).off('click');
+                    $('#' + id).on('click', function () { DeleteDataFun(); });
+                    break;
+                case 'comp_Apply':
+                    $('#' + id).off('click');
+                    $('#' + id).on('click', function () { ApplyDataFun(); });
+                    break;
+                case 'comp_Cancel':
+                    $('#' + id).off('click');
+                    $('#' + id).on('click', function () {
+                        if (_ConfirmFlag && !confirm('@Ref.MessageType.application_Audit_Confirm.GetDescription()')) {
+                            return false;
+                        }
+                        comp_CancelFun();
+                    });
+                case 'btnCancelTemp':
+                    $('#' + id).off('click');
+                    $('#' + id).on('click',
+                                    function () {
+                                        if (id == 'comp_Back' &&
+                                            _ConfirmFlag &&
+                                            !confirm('@Ref.MessageType.application_Audit_Confirm.GetDescription()')) {
+                                            return false;
+                                        }
+                                        customerUtility.closeDialog(this);
+                                    });
+                    break;
+            }
+        });
+        //#endregion
+        //#region dialog open
+        function dialogOpen(type, rowid) {
+            $('#' + mod_FormId).validate().resetForm();
+            var dialogId = 'mod_Dialog';
+            var listId = 'comp_SearchList';
+            var mod_InsertClass = 'mod_InsertType';
+            var title = customerUtility.getDialogType(type);
+            $('#' + dialogId).dialog({
+                position: { my: "top+30%", at: "center top", of: window },
+                title: title + '收據類別與公司',
+                width: 'auto',
+                autoOpen: false,
+                resizable: false,
+                closeText: '取消',
+                close: function (event, ui) {
+                    customerUtility.closeDialog(this);
+                }
+            });
+            ResetModDialog();
+            $('#btnInsert_Mod,#btnUpdate_Mod,#btnDelete_Mod').hide();
+            if (type == '@Ref.ActionType.Add.ToString()') {
+                $('#btnInsert_Mod').show();
+                $('.' + mod_InsertClass).prop('disabled', false);
+            }
+            else if (type == '@Ref.ActionType.Edit.ToString()') {
+                dialogSetData(listId, rowid);
+                $('#btnUpdate_Mod').show();
+                $('.' + mod_InsertClass).prop('disabled', false);
+            }
+            else if (type == '@Ref.ActionType.Dele.ToString()') {
+                dialogSetData(listId, rowid);
+                $('#btnDelete_Mod').show();
+                $('.' + mod_InsertClass).prop('disabled', true);
+            }
+
+            $('#' + dialogId).dialog('open');
+        }
+        //#endregion
+        //#region Dialog Set Data
+        function dialogSetData(listId, rowid) {
+            listId = listId || '';
+            rowid = rowid || 0;
+            if (rowid > 0) {
+                var data = $("#" + listId).getRowData(rowid);
+                $('#' + mod_RecieptType_Id).val(data.vRct_type_code); //收據類別(Mod)
+                $('#' + mod_Company_Id).val(data.vCompany_code); //公司名稱(Mod)
+                $('#' + mod_PaymentType_Id).val(data.vPayment_code); //繳款方式(Mod)
+                $('#' + mod_Currency_Id).val(data.vCurrency_code); //幣別(Mod)
+                $('#' + mod_IsDisabled_Id).val(data.vIsDisabled_code); //停用註記(Mod)
+                $('#' + h_RelationId).val(rowid); //RelationId(流水號)
+                $('#' + h_RowId).val(rowid); //RowId(GRID)      
+            }
+        }
+        //#endregion
+        //申請覆核
+        function ApplyDataFun() {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: UrlFor.ApplyData,
+                contentType: 'application/json',
+            }).done(function (result) {
+                customerUtility.alertAuto(result);
+                if (result.RETURN_FLAG) {
+                    //customerUtility.closeDialog($('#IM_Apply'));
+                }
+            });
+        }
+        //#endregion
+        //取消申請
+        function comp_CancelFun() {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: UrlFor.ResetData,
+                contentType: 'application/json',
+            }).done(function (result) {
+                ResetModDialog();
+                comp_SearchGrid();
+            });
+        }
+        //#endregion
+        //#region新增
+        function comp_InsertFun() {
+            dialogOpen('@Ref.ActionType.Add.ToString()', null);
+        }
+
+        function InsertDataFun() {
+            var vRecieptType = $('#' + mod_RecieptType_Id).val(); //收據類別(Mod)
+            var vCompany = $('#' + mod_Company_Id).val(); //公司名稱(Mod)
+            var vPaymentType = $('#' + mod_PaymentType_Id).val(); //繳款方式(Mod)
+            var vCurrency = $('#' + mod_Currency_Id).val(); //幣別(Mod)
+            var vIsDisabled = $('#' + mod_IsDisabled_Id).val(); //停用註記(Mod)
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify({
+                    model: insertViewModel(
+                        'A' + created.uuid(),
+                        vRecieptType,
+                        vCompany,
+                        vPaymentType,
+                        vCurrency,
+                        vIsDisabled
+                        )
+                }),
+                dataType: "json",
+                url: UrlFor.InsertData,
+                contentType: 'application/json',
+            }).done(function (result) {
+                if (result.RETURN_FLAG) {
+                    customerUtility.closeDialog($('#btnDelete_Mod'));
+                    comp_SearchGrid();
+                    _ConfirmFlag = false;
+
+                } else {
+                    customerUtility.alert(result.DESCRIPTION, 'w');
+                }
+            });
+        }
+        //#endregion
+        //#region 修改
+        function UpdateDataFun() {
+            var vRecieptType = $('#' + mod_RecieptType_Id).val(); //收據類別(Mod)
+            var vCompany = $('#' + mod_Company_Id).val(); //公司名稱(Mod)
+            var vPaymentType = $('#' + mod_PaymentType_Id).val(); //繳款方式(Mod)
+            var vCurrency = $('#' + mod_Currency_Id).val(); //幣別(Mod)
+            var vIsDisabled = $('#' + mod_IsDisabled_Id).val(); //停用註記(Mod)
+            var vRelationId = $('#' + h_RelationId).val(); //RelationId(流水號)
+            var vRowId = $('#' + h_RowId).val(); //RowId(GRID)
+
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify({
+                    model: insertViewModel(
+                        vRelationId,
+                        vRecieptType,
+                        vCompany,
+                        vPaymentType,
+                        vCurrency,
+                        vIsDisabled,
+                        vRowId
+                        )
+                }),
+                dataType: "json",
+                url: UrlFor.UpdateData,
+                contentType: 'application/json',
+            }).done(function (result) {
+                if (result.RETURN_FLAG) {
+                    customerUtility.closeDialog($('#btnDelete_Mod'));
+                    customerUtility.alertAuto(result);
+                    comp_SearchGrid();
+                    _ConfirmFlag = true;
+
+                } else {
+                    customerUtility.alert(result.DESCRIPTION, 'w');
+                }
+            });
+        }
+        //#endregion
+        //#region 刪除
+        function DeleteDataFun() {
+            var vRelationId = $('#' + h_RelationId).val(); //RelationId(流水號)
+            var vRowId = $('#' + h_RowId).val(); //RowId(GRID)
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify({
+                    model: insertViewModel(
+                        vRelationId,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        vRowId
+                        )
+                }),
+                dataType: "json",
+                url: UrlFor.DeleteData,
+                contentType: 'application/json',
+            }).done(function (result) {
+                if (result.RETURN_FLAG) {
+                    customerUtility.closeDialog($('#btnDelete_Mod'));
+                    customerUtility.alertAuto(result);
+                    comp_SearchGrid();
+                    _ConfirmFlag = false;
+
+                } else {
+                    customerUtility.alert(result.DESCRIPTION, 'w');
+                }
+            });
+        }
+        //#endregion
+        //#region 查詢
+        function form_Search() {
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify({
+                    searchModel: CompSearchViewModel(
+                        $('#' + form_dRecieptType).val(),
+                        $('#' + form_dCompany).val(),
+                        $('#' + form_dIsDisabled).val())
+                }),
+                url: UrlFor.search,
+                contentType: 'application/json',
+            }).done(function (result) {
+                //$('#' + dialogId).dialog('open');
+                if (result.RETURN_FLAG) {
+                    $('.ShowOrNot').show();
+                    comp_SearchGrid();
+                }
+                else {
+                    customerUtility.alert(result.DESCRIPTION, 'w');
+                }
+            });
+        }
+        //#endregion
+        //查詢Grid
+        function comp_SearchGrid() {
+            var colNameArray = ['動作', '執行功能', '收據類別', '收據類別名稱', '公司代碼', '公司名稱', '統一編號', '繳款方式', '付款幣別','停用註記', '資料狀態',
+                '流水號', '繳款方式代碼', '執行功能代碼', '資料狀態代碼', '作廢否代碼']
+            var colModelArray = [];
+            colModelArray.push({ name: "act", index: "act", width: 60, sortable: false });
+            colModelArray.push({ name: "vExec_action_value", index: "vExec_action_value", width: 60, sortable: false, align: 'center' });
+            colModelArray.push({ name: "vRct_type_code", index: "vRct_type_code", width: 70, sortable: false, align: 'center' });
+            colModelArray.push({ name: "vRct_type_name", index: "vRct_type_name", width: 90, sortable: false, align: 'center' });
+            colModelArray.push({ name: "vCompany_code", index: "vCompany_code", width: 65, sortable: false, align: 'center' });
+            colModelArray.push({ name: "vCompany_name", index: "vCompany_name", width: 265, sortable: false, align: 'center' });
+            colModelArray.push({ name: "vCompany_vat_no", index: "vCompany_vat_no", width: 80, sortable: false, align: 'center' });
+            colModelArray.push({ name: "vPayment_value", index: "vPayment_value", width: 65, sortable: false, align: 'center' });
+            colModelArray.push({ name: "vCurrency_code", index: "vCurrency_code", width: 65, sortable: false, align: 'center' });
+            colModelArray.push({ name: "vIsDisabled_value", index: "vIsDisabled_value", width: 65, sortable: false, align: 'center' });
+            colModelArray.push({ name: "vData_status_value", index: "vData_status_value", width: 65, sortable: false, align: 'center' });
+
+            colModelArray.push({ name: "vRelation_id", index: "vRelation_id", hidden: true });
+            colModelArray.push({ name: "vPayment_code", index: "vPayment_code", hidden: true });
+            colModelArray.push({ name: "vExec_action_code", index: "vExec_action_code", hidden: true });
+            colModelArray.push({ name: "vData_status_code", index: "vData_status_code", hidden: true });
+            colModelArray.push({ name: "vIsDisabled_code", index: "vIsDisabled_code", hidden: true });
+            jqgridCustom.createJqgridByCache(
+                'comp_jqgridDiv',
+                'comp_SearchList',
+                'comp_SearchPager',
+                UrlFor.getData,
+                {
+                    type: 'Search'
+                },
+                colNameArray,
+                colModelArray,
+                '查詢列表',
+                jqgridCustom.getPage('comp_jqgridDiv'),
+                comp_CompleteFun,
+                true
+                );
+        }
+        //#endregion
+        //#region jqgrid 事件
+        function comp_CompleteFun(listId) {
+            jqgridCustom.randerAction(listId, 'comp_Search', tempActFun);
+
+            $('#' + listId + ' > tbody > tr:gt(0) ').each(function (i, j) {
+                var tr = $(this);
+                var status = tr.find($.validator.format('td[aria-describedby$={0}_vData_status_code]', listId)).text();
+                //var Is_Disabled = tr.find($.validator.format('td[aria-describedby$={0}_vIS_DISABLED]', listId)).text();
+                var exec_action = tr.find($.validator.format('td[aria-describedby$={0}_vExec_action_code]', listId)).text();
+                if (status != '1') {
+                    $(this).find('.actionEditIcon').hide();
+                    $(this).find('.actionDeleIcon').hide();
+                }
+                if (exec_action != 'A') {
+                    $(this).find('.actionDeleIcon').hide();
+                } else {
+                    $(this).find('.actionEditIcon').hide();
+                }
+                $(this).find('.actionViewIcon').hide();
+            });
+        }
+
+        var tempActFun = {};
+        tempActFun.Edit = function (i) {
+            dialogOpen('@Ref.ActionType.Edit.ToString()', i);
+        }
+        tempActFun.Dele = function (i) {
+            dialogOpen('@Ref.ActionType.Dele.ToString()', i);
+        }
+        tempActFun.View = function (i) {
+            dialogOpen('@Ref.ActionType.View.ToString()', i);
+        }
+        //#endregion
+        //#region 重設輸入項目
+        function ResetModDialog() {
+            if ($('#' + mod_RecieptType_Id + ' option').length > 0) {
+                $('#' + mod_RecieptType_Id).val($($('#' + mod_RecieptType_Id + ' option')[0]).val());
+            }
+            if ($('#' + mod_Company_Id + ' option').length > 0) {
+                $('#' + mod_Company_Id).val($($('#' + mod_Company_Id + ' option')[0]).val());
+            }
+            if ($('#' + mod_PaymentType_Id + ' option').length > 0) {
+                $('#' + mod_PaymentType_Id).val($($('#' + mod_PaymentType_Id + ' option')[0]).val());
+            }
+            if ($('#' + mod_Currency_Id + ' option').length > 0) {
+                $('#' + mod_Currency_Id).val($($('#' + mod_Currency_Id + ' option')[0]).val());
+            }
+            if ($('#' + mod_IsDisabled_Id + ' option').length > 0) {
+                $('#' + mod_IsDisabled_Id).val($($('#' + mod_IsDisabled_Id + ' option')[0]).val());
+            }
+        }
+        //#endregion
+        //#region 查詢畫面  ViewModel
+        function CompSearchViewModel(vRecieptType, vCompany, vIsDisabled) {
+            var obj = {};
+            obj['vRct_type_code'] = vRecieptType;
+            obj['vCompany_code'] = vCompany;
+            obj['vIsDisabled_code'] = vIsDisabled;
+            return obj;
+        }
+        //#endregion
+        //#region Insert ViewModel
+        function insertViewModel(vRelation_id, vRecieptType, vCompany, vPaymentType, vCurrency, vIsDisabled, vRowId) {
+            var obj = {};
+            obj['vRct_type_code'] = vRelation_id
+            obj['vRct_type_code'] = vRecieptType;
+            obj['vCompany_code'] = vCompany;
+            obj['vPayment_code'] = vPaymentType;
+            obj['vCurrency_code'] = vCurrency;
+            obj['vIsDisabled_code'] = vIsDisabled;
+            obj['vRowId'] = vRowId;
+            return obj;
+        }
+        //#endregion
+    }
+</script>
+

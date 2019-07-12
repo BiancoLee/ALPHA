@@ -1,0 +1,4 @@
+2019-07-04 13:37:18.4680|SSO.Web.Controllers.AccountController|[AccountController][Logout]e:System.NullReferenceException: 並未將物件參考設定為物件的執行個體。
+   於 SSO.Web.Controllers.AccountController.Logout() 於 D:\財會精算系統科\Programs\Receipt\Fubon.Receipt\SSO.Web\Controllers\AccountController.cs: 行 226
+2019-07-04 16:13:01.3647|SSO.Web.Controllers.AccountController|[AccountController][Logout]e:System.NullReferenceException: 並未將物件參考設定為物件的執行個體。
+   於 SSO.Web.Controllers.AccountController.Logout() 於 D:\財會精算系統科\Programs\Receipt\Fubon.Receipt\SSO.Web\Controllers\AccountController.cs: 行 226
